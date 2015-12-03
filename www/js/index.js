@@ -41,21 +41,11 @@ var app = {
               app.receivedNFCId(nfc.bytesToHexString(tag.id));
             },
             function () { // success callback
-            //  app.receivedEvent('nfcready');
             },
             function (error) { // error callback
               alert("Error adding NDEF listener " + JSON.stringify(error));
             }
         );
-    },
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
     },
     receivedNFCId: function(nfcId) {
       var parentElement = document.getElementById('nfcid');
