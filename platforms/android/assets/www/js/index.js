@@ -16,7 +16,11 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
+var jagertrain = new Jagertrain();
 var app = {
+
+
     // Application Constructor
     initialize: function() {
         this.bindEvents();
@@ -57,6 +61,8 @@ var app = {
       listeningElement.setAttribute('style', 'display:none;');
       receivedElement.setAttribute('style', 'display:block;');
       receivedElement.textContent = nfcId;
+
+      jagertrain.purchaseShot(nfcId);
 
       setTimeout(function() {
         parentElement.setAttribute('class', 'blink');
