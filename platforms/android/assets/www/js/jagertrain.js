@@ -1,12 +1,21 @@
 'use strict';
 
 var Jagertrain = function() {
+  var firebaseRef = new Firebase("https://jagertrain.firebaseio.com");
   var store = new Lawnchair({ adapter: 'dom', table: 'customers'}, function() {
     console.log('Initialised database!');
     this.nuke();
   });
 
   this.purchaseShot = function(customerId) {
+
+    var transactionsRef = firebaseRef.child('transactions');
+    // we can also chain the two calls together
+    transactionsRef.push().set({
+      customer: customerId,
+      date: Firebase.ServerValue.TIMESTAMP
+    });
+
     var balance = 0;
 
     store.exists(customerId, function(exists) {
