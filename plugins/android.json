@@ -12,6 +12,12 @@
         },
         "phonegap-nfc": {
             "PACKAGE_NAME": "com.phonegap.rd_jagertrain"
+        },
+        "org.apache.cordova.plugin.power-management": {
+            "PACKAGE_NAME": "com.phonegap.rd_jagertrain"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.phonegap.rd_jagertrain"
         }
     },
     "dependent_plugins": {}

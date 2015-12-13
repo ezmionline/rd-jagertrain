@@ -37,6 +37,12 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
+
+        // Acquire wakelock
+        powerManagement.acquireWakeLock(function() {
+            wakelocked = true;
+        });
+
         // Read NDEF formatted NFC Tags
         nfc.addNdefListener (
             function (nfcEvent) {
