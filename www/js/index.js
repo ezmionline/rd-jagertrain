@@ -39,8 +39,9 @@ var app = {
     onDeviceReady: function() {
 
         // Acquire wakelock
-        powerManagement.acquireWakeLock(function() {
-            wakelocked = true;
+        powerManagement.acquireWakeLock(function(result) {
+          console.log("Wakelock result: " + result);
+            //wakelocked = true;
         });
 
         // Read NDEF formatted NFC Tags
