@@ -18,6 +18,7 @@
  */
 
 var jagertrain = new Jagertrain();
+var nfcCallback;
 var app = {
 
 
@@ -38,25 +39,14 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
 
-        // Acquire wakelock
-        powerManagement.acquireWakeLock(function(result) {
-          console.log("Wakelock result: " + result);
-            //wakelocked = true;
-        });
+        nfcCallback = function (nfcEvent) {
+          var tag = nfcEvent.tag;
+          var ndefMessage = tag.ndefMessage;
+          app.receivedNFCId(nfc.bytesToHexString(tag.id));
+        };
 
         // Read NDEF formatted NFC Tags
-        nfc.addNdefListener (
-            function (nfcEvent) {
-              var tag = nfcEvent.tag;
-              var ndefMessage = tag.ndefMessage;
-              app.receivedNFCId(nfc.bytesToHexString(tag.id));
-            },
-            function () { // success callback
-            },
-            function (error) { // error callback
-              alert("Error adding NDEF listener " + JSON.stringify(error));
-            }
-        );
+        nfc.addNdefListener (nfcCallback);
     },
     receivedNFCId: function(nfcId) {
       var parentElement = document.getElementById('nfcid');
@@ -71,10 +61,14 @@ var app = {
 
       jagertrain.purchaseShot(nfcId);
 
+      nfc.removeNdefListener (nfcCallback);
+
       setTimeout(function() {
+        nfc.addNdefListener (nfcCallback);
+
         parentElement.setAttribute('class', 'blink');
         listeningElement.setAttribute('style', 'display:block;');
         receivedElement.setAttribute('style', 'display:none;');
-      }, 3000);
+      }, 7500);
     }
 };
